@@ -1,4 +1,7 @@
 # Changelog for BadLeatherCategory
 
+1.0.1.0 - Regular animal-like leather used by some races should no longer be considered bad
+
+
 1.0.0.0 - First publish
 
