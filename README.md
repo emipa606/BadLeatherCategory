@@ -5,7 +5,18 @@
 
 Puts all leather that is defined as coming from a Humanlike race and would cause bad thoughts from wearing in its own category 
 
+Russian translation by Tkhakiro
+
 Idea by: ldvhl 
+
+[table]
+    [tr]
+        [td]https://invite.gg/Mlie]![Image](https://i.imgur.com/zdzzBrc.png)
+[/td]
+        [td]https://github.com/emipa606/BadLeatherCategory]![Image](https://i.imgur.com/kTkpTOE.png)
+[/td]
+    [/tr]
+[/table]
 	
 ![Image](https://i.imgur.com/Rs6T6cr.png)
 
