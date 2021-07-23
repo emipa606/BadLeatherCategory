@@ -27,7 +27,7 @@ namespace BadLeatherCategory
 
             var counter = 0;
             foreach (var raceDef in from raceDef in DefDatabase<ThingDef>.AllDefsListForReading
-                where raceDef.race != null && raceDef.race.Humanlike
+                where raceDef.race is {Humanlike: true}
                 select raceDef)
             {
                 if (raceDef.race.leatherDef == null)
@@ -41,7 +41,7 @@ namespace BadLeatherCategory
                 }
 
                 if ((from race in DefDatabase<ThingDef>.AllDefsListForReading
-                    where race.race != null && !race.race.Humanlike && race.race.leatherDef == raceDef.race.leatherDef
+                    where race.race is {Humanlike: false} && race.race.leatherDef == raceDef.race.leatherDef
                     select race).Any())
                 {
                     continue;
@@ -56,6 +56,8 @@ namespace BadLeatherCategory
 
             LeathersCategory.ClearCachedData();
             LeatherBadCategory.ClearCachedData();
+            LeathersCategory.ResolveReferences();
+            LeatherBadCategory.ResolveReferences();
             Log.Message($"[BadLeatherCategory]: Moved {counter} leather to the Bad Leather-category");
         }
     }
