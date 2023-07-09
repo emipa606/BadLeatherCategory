@@ -42,20 +42,28 @@ public class BadLeatherCategory
                 continue;
             }
 
-            if ((from race in DefDatabase<ThingDef>.AllDefsListForReading
-                    where race.race is { Humanlike: false } && race.race.leatherDef == raceDef.race.leatherDef
-                    select race).Any())
+            var nonHumanlikes = from race in DefDatabase<ThingDef>.AllDefsListForReading
+                where race.race is { Humanlike: false } && race.race.leatherDef == raceDef.race.leatherDef
+                select race;
+            if (nonHumanlikes.Any())
             {
-                //Log.Message($"{raceDef.race.leatherDef} also used by non-humanlike pawns. Skipping");
-                continue;
+                Log.Message(
+                    $"[BadLeatherCategory]: Note that {raceDef.race.leatherDef} is also used by non-humanlikes. {string.Join(", ", nonHumanlikes)}");
             }
 
-            //Log.Message($"Addeing {raceDef.race.leatherDef} from {raceDef} as bad");
+            //Log.Message($"Adding {raceDef.race.leatherDef} from {raceDef} as bad");
             LeathersCategory.childThingDefs.Remove(raceDef.race.leatherDef);
             raceDef.race.leatherDef.thingCategories.Remove(LeathersCategory);
             LeatherBadCategory.childThingDefs.Add(raceDef.race.leatherDef);
             raceDef.race.leatherDef.thingCategories.Add(LeatherBadCategory);
             counter++;
+        }
+
+        if (counter == 0)
+        {
+            Log.Message(
+                "[BadLeatherCategory]: Found no leather used by humanlikes to move to the Bad Leather-category");
+            return;
         }
 
         LeathersCategory.ClearCachedData();
