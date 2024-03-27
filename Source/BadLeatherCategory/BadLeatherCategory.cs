@@ -8,16 +8,16 @@ public class BadLeatherCategory
 {
     static BadLeatherCategory()
     {
-        var LeathersCategory = DefDatabase<ThingCategoryDef>.GetNamedSilentFail("Leathers");
-        if (LeathersCategory == null)
+        var leathersCategory = DefDatabase<ThingCategoryDef>.GetNamedSilentFail("Leathers");
+        if (leathersCategory == null)
         {
             Log.ErrorOnce("[BadLeatherCategory]: Could not find the Leathers-category. Will not sort bad leather.",
                 "LeathersCategory".GetHashCode());
             return;
         }
 
-        var LeatherBadCategory = DefDatabase<ThingCategoryDef>.GetNamedSilentFail("LeatherBad");
-        if (LeatherBadCategory == null)
+        var leatherBadCategory = DefDatabase<ThingCategoryDef>.GetNamedSilentFail("LeatherBad");
+        if (leatherBadCategory == null)
         {
             Log.ErrorOnce(
                 "[BadLeatherCategory]: Could not find the LeatherBad-category. Will not sort bad leather.",
@@ -36,7 +36,7 @@ public class BadLeatherCategory
                 continue;
             }
 
-            if (LeatherBadCategory.childThingDefs.Contains(raceDef.race.leatherDef))
+            if (leatherBadCategory.childThingDefs.Contains(raceDef.race.leatherDef))
             {
                 //Log.Message($"{raceDef.race.leatherDef} already moved");
                 continue;
@@ -52,10 +52,10 @@ public class BadLeatherCategory
             }
 
             //Log.Message($"Adding {raceDef.race.leatherDef} from {raceDef} as bad");
-            LeathersCategory.childThingDefs.Remove(raceDef.race.leatherDef);
-            raceDef.race.leatherDef.thingCategories.Remove(LeathersCategory);
-            LeatherBadCategory.childThingDefs.Add(raceDef.race.leatherDef);
-            raceDef.race.leatherDef.thingCategories.Add(LeatherBadCategory);
+            leathersCategory.childThingDefs.Remove(raceDef.race.leatherDef);
+            raceDef.race.leatherDef.thingCategories.Remove(leathersCategory);
+            leatherBadCategory.childThingDefs.Add(raceDef.race.leatherDef);
+            raceDef.race.leatherDef.thingCategories.Add(leatherBadCategory);
             counter++;
         }
 
@@ -66,10 +66,10 @@ public class BadLeatherCategory
             return;
         }
 
-        LeathersCategory.ClearCachedData();
-        LeatherBadCategory.ClearCachedData();
-        LeathersCategory.ResolveReferences();
-        LeatherBadCategory.ResolveReferences();
+        leathersCategory.ClearCachedData();
+        leatherBadCategory.ClearCachedData();
+        leathersCategory.ResolveReferences();
+        leatherBadCategory.ResolveReferences();
         Log.Message($"[BadLeatherCategory]: Moved {counter} leather to the Bad Leather-category");
     }
 }

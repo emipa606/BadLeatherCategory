@@ -1,5 +1,8 @@
 # Changelog for BadLeatherCategory
 
+1.5.0 - Mod updated for 1.5 and passed autotests
+
+
 1.4.2 - Will allow leather that is also used by non-humanoids, adds info about it to the log. To support Alpha Animals and other mods that use humanoid leathers for animals
 
 
