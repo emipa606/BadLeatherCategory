@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using RimWorld;
 using Verse;
 
 namespace BadLeatherCategory;
@@ -56,6 +57,15 @@ public class BadLeatherCategory
             raceDef.race.leatherDef.thingCategories.Remove(leathersCategory);
             leatherBadCategory.childThingDefs.Add(raceDef.race.leatherDef);
             raceDef.race.leatherDef.thingCategories.Add(leatherBadCategory);
+            counter++;
+        }
+
+        if (ModLister.AnomalyInstalled)
+        {
+            leathersCategory.childThingDefs.Remove(ThingDefOf.Leather_Dread);
+            ThingDefOf.Leather_Dread.thingCategories.Remove(leathersCategory);
+            leatherBadCategory.childThingDefs.Add(ThingDefOf.Leather_Dread);
+            ThingDefOf.Leather_Dread.thingCategories.Add(leatherBadCategory);
             counter++;
         }
 
