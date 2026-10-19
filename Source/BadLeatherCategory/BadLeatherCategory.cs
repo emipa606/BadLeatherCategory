@@ -5,7 +5,7 @@ using Verse;
 namespace BadLeatherCategory;
 
 [StaticConstructorOnStartup]
-public class BadLeatherCategory
+public static class BadLeatherCategory
 {
     static BadLeatherCategory()
     {
@@ -27,36 +27,33 @@ public class BadLeatherCategory
         }
 
         var counter = 0;
-        foreach (var raceDef in from raceDef in DefDatabase<ThingDef>.AllDefsListForReading
+        foreach (var race in from raceDef in DefDatabase<ThingDef>.AllDefsListForReading
                  where raceDef.race is { Humanlike: true }
-                 select raceDef)
+                 select raceDef.race)
         {
-            if (raceDef.race.leatherDef == null)
+            if (race.leatherDef == null)
             {
-                //Log.Message($"{raceDef} has no leather");
                 continue;
             }
 
-            if (leatherBadCategory.childThingDefs.Contains(raceDef.race.leatherDef))
+            if (leatherBadCategory.childThingDefs.Contains(race.leatherDef))
             {
-                //Log.Message($"{raceDef.race.leatherDef} already moved");
                 continue;
             }
 
-            var nonHumanlikes = from race in DefDatabase<ThingDef>.AllDefsListForReading
-                where race.race is { Humanlike: false } && race.race.leatherDef == raceDef.race.leatherDef
-                select race;
+            var nonHumanlikes = from leatherRace in DefDatabase<ThingDef>.AllDefsListForReading
+                where leatherRace.race is { Humanlike: false } && leatherRace.race.leatherDef == race.leatherDef
+                select leatherRace;
             if (nonHumanlikes.Any())
             {
                 Log.Message(
-                    $"[BadLeatherCategory]: Note that {raceDef.race.leatherDef} is also used by non-humanlikes. {string.Join(", ", nonHumanlikes)}");
+                    $"[BadLeatherCategory]: Note that {race.leatherDef} is also used by non-humanlikes. {string.Join(", ", nonHumanlikes)}");
             }
 
-            //Log.Message($"Adding {raceDef.race.leatherDef} from {raceDef} as bad");
-            leathersCategory.childThingDefs.Remove(raceDef.race.leatherDef);
-            raceDef.race.leatherDef.thingCategories.Remove(leathersCategory);
-            leatherBadCategory.childThingDefs.Add(raceDef.race.leatherDef);
-            raceDef.race.leatherDef.thingCategories.Add(leatherBadCategory);
+            leathersCategory.childThingDefs.Remove(race.leatherDef);
+            race.leatherDef.thingCategories.Remove(leathersCategory);
+            leatherBadCategory.childThingDefs.Add(race.leatherDef);
+            race.leatherDef.thingCategories.Add(leatherBadCategory);
             counter++;
         }
 

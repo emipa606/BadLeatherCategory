@@ -3,4 +3,13 @@
     <BuildType Name="Release" />
   </Configurations>
   <Project Path="BadLeatherCategory/BadLeatherCategory.csproj" />
+  <Folder Name="/.github/">
+    <File Path="../.github/copilot-instructions.md" />
+  </Folder>
+  <Folder Name="/XML/About/">
+    <File Path="../About/about.xml" />
+  </Folder>
+  <Folder Name="/XML/Defs/">
+    <File Path="../Defs/ThingCategories.xml" />
+  </Folder>
 </Solution>
